@@ -1,0 +1,25 @@
+<%- include("./partials/header")%>
+<%- include("./partials/nav")%>
+
+
+<div class="all blogs w-[90%] mx-auto h-screen bg-slate-200 p-5 flex flex-col gap-4">
+
+    <%allBlogs.forEach((singleblog)=>{%>
+        <a href="/blogdescription/2">
+            <div class="singleblog flex gap-5 bg-white p-4">
+                <div class="imagediv w-[30%] h-[160px] bg-red-500">
+                 <img class="w-full h-full obeject-cover" src="<%=singleblog.blogImage%>" alt="">
+                </div>
+                <div class="detsi w-[70%]">
+                 <h1 class="text-3xl"><%=singleblog.title%></h1>
+                 <h1><%=singleblog.description%></h1>
+                </div>
+             </div>
+        </a>
+   <% })%>
+   
+</div>
+
+
+
+<%- include("./partials/footer")%>
