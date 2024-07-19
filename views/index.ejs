@@ -5,14 +5,16 @@
 <div class="all blogs w-[90%] mx-auto h-screen bg-slate-200 p-5 flex flex-col gap-4">
 
     <%allBlogs.forEach((singleblog)=>{%>
-        <a href="/blogdescription/2">
+        <a href="/blogdescription/<%=singleblog._id%>">
             <div class="singleblog flex gap-5 bg-white p-4">
                 <div class="imagediv w-[30%] h-[160px] bg-red-500">
                  <img class="w-full h-full obeject-cover" src="<%=singleblog.blogImage%>" alt="">
                 </div>
                 <div class="detsi w-[70%]">
-                 <h1 class="text-3xl"><%=singleblog.title%></h1>
-                 <h1><%=singleblog.description%></h1>
+                 <div>
+                    <h1 class="text-3xl"><%=singleblog.title.slice(0, 15)%>......</h1> <p class=" py-2"><%=singleblog.createdAt.toString().slice(0,15)%></p>
+                 </div>
+                 <h1><%=singleblog.description.slice(0, 300)%>......%> <span class="text-blue-500">Read More</span></h1>
                 </div>
              </div>
         </a>

@@ -6,6 +6,7 @@ const userModel = require("../Models/userModel");
 const localStrategy = require("passport-local");
 const blogModel = require("../Models/blogModel");
 const imagekit = require("../util/imagekit");
+const commentsModel = require("../Models/commentsModel");
 passport.use(new localStrategy(userModel.authenticate()));
 
 exports.homepage = function (req, res, next) {
@@ -81,3 +82,30 @@ exports.uploadimg = async (req, res, next) => {
   console.log(user);
   res.render("profile", { user });
 };
+
+
+exports.blogupdate = async(req, res ,next)=>{
+  const updateblog = await blogModel.findByIdAndUpdate({_id:req.params.id}, {
+    title: req.body.title,
+    description: req.body.description,
+    blogImage: req.body.blogImage
+  })
+  await updateblog.save()
+  res.redirect("/profile")
+}
+
+exports.commentkaro = async(req, res, next)=>{
+
+  const newComment = await new commentsModel({
+    commentText: req.body.comment,
+    postedBy: req.user._id,
+    blogId:req.params.id
+  })
+  await newComment.save()
+  const currentblog = await blogModel.findByIdAndUpdate(req.params.id,{
+    $push:{comments:newComment._id}
+  })
+  await currentblog.save()
+
+  res.redirect(`/blogdescription/${req.params.id}`)
+}

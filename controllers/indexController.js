@@ -28,6 +28,22 @@ exports.indexhomepage = async function(req, res, next) {
   }
 
   exports.indexblogDescription = async (req, res, next)=>{
-    res.render("blogdescription" )
+    const blogdescription = await blogModel.findById(req.params.id).populate({
+      path: "comments",
+      populate: { path: "postedBy", model: "user" }
+  })
+  .exec();
+    console.log(blogdescription);
+    res.render("blogdescription", {blogdescription} )
 
+  }
+
+  exports.updateBlog = async(req, res, next)=>{
+    const currentblog = await blogModel.findById(req.params.id)
+    res.render("update", {currentblog})
+  }
+
+  exports.deletblog = async(req, res, next)=>{
+    await blogModel.findByIdAndDelete(req.params.id)
+    res.redirect("/profile")
   }

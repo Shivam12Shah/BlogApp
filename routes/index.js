@@ -1,5 +1,5 @@
 var express = require('express');
-const { indexhomepage, indexlogin, indexregister ,indexprofile, indexcreatBlog, indexblogDescription} = require('../controllers/indexController');
+const { indexhomepage, indexlogin, indexregister ,indexprofile, indexcreatBlog, indexblogDescription ,updateBlog ,deletblog} = require('../controllers/indexController');
 const { isloggedin } = require('../util/middelware');
 var router = express.Router();
 
@@ -12,8 +12,12 @@ router.get('/profile',isloggedin, indexprofile)
 
 router.get('/register', indexregister);
 
-router.get('/blogdescription/:id', indexblogDescription);
+router.get('/update/:id', isloggedin,updateBlog);
 
-router.get('/createblog', indexcreatBlog);
+router.get('/blogdescription/:id',isloggedin, indexblogDescription);
+
+router.get('/createblog', isloggedin,indexcreatBlog);
+
+router.get("/delete/:id", isloggedin, deletblog)
 
 module.exports = router;
